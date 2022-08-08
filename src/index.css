@@ -148,6 +148,7 @@ img.movie-poster {
 
 p.release-date {
   margin: 12px 0;
+  font-size: 13px;
 }
 
 #beforeBtn,
@@ -232,6 +233,27 @@ input::-webkit-inner-spin-button {
 }
 #jumpToNum::placeholder {
   color: rgb(175, 175, 175);
+}
+.removeDetailsDiv {
+  width: 96%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.removeWatchListDiv {
+  width: 99.8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.delBtn {
+  padding: 3px 4px;
+  border: none;
+  background: #673ab7;
+  color: white;
+
+  font-size: 9px;
+  cursor: pointer;
 }
 
 @keyframes bump {

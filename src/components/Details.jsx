@@ -1,37 +1,41 @@
-import React, { useState } from 'react'
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { BASE_URL } from './ui/MovieCard';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { addWatchList, delWatchList, getDetails } from "../features/movies/moviesSlice";
+import { BASE_URL } from "./ui/MovieCard";
 
 export default function Details() {
-    const [movie, setMovie] = useState(null);
-    const params = useParams();
-    const API_URL = `https://api.themoviedb.org/3/movie/${params.id}?api_key=9b153f4e40437e115298166e6c1b997c`;
-    
+  const dispatch = useDispatch();
+  const params = useParams();
+  const { movieDetails, watchList } = useSelector((state) => state.movies);
 
-    let getData = () => {
-        fetch(API_URL).then(data => data.json()).then(data => setMovie(data));
-    }
-    useEffect(() => {
-        getData();
-    }, []);
-    return (
-        <div className='details-container'>
-            {movie === null
-                ? <h2 className="center">Loading...</h2>
-                :
-                <>
-                    <div className="left">
-                        <img src={BASE_URL + movie.poster_path} alt={movie.title} className="movie-poster" />
-                    </div>
-                    <div className="right">
-                        <h1 className="title">{movie.original_title}</h1>
-                        <p className="desc">{movie.overview}</p>
-                        <p className="release-date">Release Date: {movie.release_date}</p>
-                        <button>Add to Watchlist</button>
-                    </div>
-                </>
-            }
-        </div>
-    )
+  useEffect(() => {
+    dispatch(getDetails(params.id));
+    // eslint-disable-next-line
+  }, []);
+
+  return (
+    <div className="details-container">
+      {!movieDetails ? (
+        <h2 className="center">Loading...</h2>
+      ) : (
+        <>
+          <div className="left">
+            <img src={BASE_URL + movieDetails.poster_path} alt={movieDetails.title} className="movie-poster" />
+          </div>
+          <div className="right">
+            <h1 className="title">{movieDetails.original_title}</h1>
+            <p className="desc">{movieDetails.overview}</p>
+            <div className="removeDetailsDiv">
+              <p className="release-date">Release Date: {movieDetails.release_date}</p>
+              <button className="delBtn" onClick={() => dispatch(delWatchList(movieDetails))} style={{ display: watchList.every((ele) => ele.id !== movieDetails.id) ? "none" : "flex" }}>
+                Remove from Watchlist
+              </button>
+            </div>
+            <button onClick={() => dispatch(addWatchList(movieDetails))}>Add to Watchlist</button>
+          </div>
+        </>
+      )}
+    </div>
+  );
 }

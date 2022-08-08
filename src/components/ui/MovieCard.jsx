@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { addWatchList } from "../../features/movies/moviesSlice";
+import { addWatchList, delWatchList } from "../../features/movies/moviesSlice";
 
 const BASE_URL = "https://image.tmdb.org/t/p/original/";
-export default function MovieCard({ movie }) {
+export default function MovieCard({ movie, isWatchList = false }) {
   const dispatch = useDispatch();
 
   return (
@@ -14,7 +14,12 @@ export default function MovieCard({ movie }) {
       </div>
       <h1 className="title">{movie.original_title}</h1>
       <p className="desc">{movie.overview.substring(0, 100) + "..."}</p>
-      <p className="release">{movie.release_date}</p>
+      <div className="removeWatchListDiv">
+        <p className="release-date">Release Date: {movie.release_date}</p>
+        <button className="delBtn" onClick={() => dispatch(delWatchList(movie))} style={{ display: isWatchList ? "flex" : "none" }}>
+          Remove
+        </button>
+      </div>
       <div className="card-actions">
         <button onClick={() => dispatch(addWatchList(movie))}>Add To Watchlist</button>
         <Link to={"/details/" + movie.id}>

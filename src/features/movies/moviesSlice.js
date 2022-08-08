@@ -1,12 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-const API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=9b153f4e40437e115298166e6c1b997c";
 
 const moviesListCreate = createAsyncThunk("moviesStorage/moviesListCreate", async (pageNum = 1) => {
-  //   pageNum = pageNum < 1 ? 1 : pageNum;
+  const API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=9b153f4e40437e115298166e6c1b997c";
   const response = await fetch(API_URL + "&page=" + pageNum);
   const data = await response.json();
   return [data.results, pageNum];
+});
+
+const getDetails = createAsyncThunk("moviesStorage/getDetails", async (movieID) => {
+  const DETAILS_URL = `https://api.themoviedb.org/3/movie/${movieID}?api_key=9b153f4e40437e115298166e6c1b997c`;
+  const response = await fetch(DETAILS_URL);
+  const data = await response.json();
+  return data;
 });
 
 const moviesSlice = createSlice({
@@ -17,12 +23,16 @@ const moviesSlice = createSlice({
     loading: false,
     error: null,
     currentPage: 1,
+    movieDetails: null,
   },
   reducers: {
     addWatchList: (state, action) => {
       if (state.watchList.length === 0) {
         state.watchList.push(action.payload);
       } else if (state.watchList.length > 0 && state.watchList.every((ele) => ele.id !== action.payload.id)) state.watchList.push(action.payload);
+    },
+    delWatchList: (state, action) => {
+      state.watchList = state.watchList.filter((ele) => ele.id !== action.payload.id);
     },
     clearWatchList: (state, action) => {
       state.watchList = [];
@@ -46,11 +56,26 @@ const moviesSlice = createSlice({
       state.moviesList = responseList;
       state.currentPage = pageNum;
     },
+    [getDetails.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getDetails.rejected]: (state, action) => {
+      state.loading = false;
+      const error = action.error;
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      state.error = error.message;
+      console.log(`ERRORCODE:${errorCode}:${errorMessage}`);
+    },
+    [getDetails.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.movieDetails = action.payload;
+    },
   },
 });
 
 export default moviesSlice.reducer;
 
-export { moviesListCreate };
+export { moviesListCreate, getDetails };
 
-export const { addWatchList, clearWatchList } = moviesSlice.actions;
+export const { addWatchList, delWatchList, clearWatchList } = moviesSlice.actions;
