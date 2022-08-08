@@ -1,0 +1,247 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+
+body {
+  background-color: #d1c4e9;
+}
+
+.logo {
+  cursor: pointer;
+}
+
+.card {
+  width: 250px;
+  background: white;
+  box-shadow: 4px 0px 6px 0px #3333331f;
+  margin: 12px 0;
+}
+
+.navbar {
+  width: 100%;
+  background: #9575cd;
+  color: white;
+  padding: 32px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.actions a {
+  text-decoration: none;
+  background: white;
+  padding: 6px;
+  border-radius: 4px;
+  color: #673ab7;
+}
+
+.actions a:hover {
+  text-decoration: underline;
+}
+
+.list-container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  z-index: 1;
+}
+
+.card {
+  width: 250px;
+  background: white;
+  box-shadow: 4px 0px 6px 0px #3333331f;
+  margin: 12px;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+h1.title {
+  font-size: 24px;
+  margin: 12px 0;
+  color: #673ab7;
+}
+
+img.poster {
+  max-width: 100%;
+  transition: all 300ms ease;
+}
+
+.image-container {
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.image-container:hover img.poster {
+  transform: scale(1.1);
+}
+p.desc {
+  color: #3a3a3a;
+  margin: 12px 0;
+}
+
+p.release {
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+button {
+  padding: 8px 10px;
+  border: none;
+  background: #673ab7;
+  color: white;
+
+  font-size: 12px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #592ea4;
+}
+
+.card-actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+img {
+  max-width: 100%;
+}
+.details-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 32px;
+}
+
+.left,
+.right {
+  flex: 1;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+img.movie-poster {
+  width: 400px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 4px 0px #673ab754;
+}
+
+.right {
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-right: 32px;
+}
+
+p.release-date {
+  margin: 12px 0;
+}
+
+#beforeBtn,
+#afterBtn {
+  height: 75px;
+  width: 55px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("/public/assets/right-arrow.svg");
+  background-size: 75px;
+  background-repeat: no-repeat;
+  pointer-events: all;
+
+  filter: invert(95%);
+}
+#beforeBtn {
+  transform: rotate(180deg);
+}
+#beforeBtn:hover,
+#afterBtn:hover {
+  cursor: pointer;
+}
+
+#navControls {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  padding: 0px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 0;
+  pointer-events: none;
+}
+#jumpTo {
+  padding: 7px 10px;
+  height: 100px;
+  position: fixed;
+  right: -77px;
+  top: 20%;
+
+  display: flex;
+  flex-direction: column;
+
+  transform: rotate(270deg);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  color: white;
+  background-color: #b18bef;
+  pointer-events: all;
+}
+#jumpTo:hover {
+  cursor: pointer;
+  animation: bump 1000ms ease-in-out;
+}
+#jumpToHeader {
+  align-self: flex-start;
+}
+#jumpToNum {
+  position: relative;
+  top: 10px;
+  height: 50px;
+  width: 50px;
+
+  text-align: center;
+  align-self: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+  transform: rotate(90deg);
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+#jumpToNum::placeholder {
+  color: rgb(175, 175, 175);
+}
+
+@keyframes bump {
+  0% {
+    right: -77px;
+  }
+  50% {
+    right: -71px;
+  }
+  100% {
+    right: -77px;
+  }
+}
